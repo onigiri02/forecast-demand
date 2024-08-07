@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <!-- Mapperとxmlのマッピング -->
+ <mapper namespace="com.portfolio.repository.ForecastMapper">
+	 
+
+ 	<!-- マッピング定義（期間データ取得） -->
+
+	  <resultMap id="forecastCalendarMap" type="com.portfolio.domain.forecast.model.ForecastCalendar">
+	    <result property="calendarDate" column="calendar_date"/>
+	    <result property="highestTemperature" column="highest_temperature"/>
+	    <result property="studentsEnrolled" column="students_enrolled"/>
+	    <result property="attendanceRate" column="attendance_rate"/>
+	    <result property="issuedQuantities" column="issued_quantities"/>
+	    <result property="stockQuantities" column="stock_quantities"/>
+	    <result property="orderedQuantity" column="ordered_quantity"/>
+	  </resultMap>
+
+
+	 <!-- マッピング定義（作業項目） -->
+
+<!--	 <resultMap type="com.portfolio.domain.todoItem.model.TodoItem" id="todoItem">-->
+<!--		<id column="id" property="id" />-->
+<!--		<result column="user_id" property="userId" />-->
+<!--		<result column="item_name" property="itemName" />-->
+<!--		<result column="registration_date" property="registrationDate" />-->
+<!--		<result column="expire_date" property="expireDate" />-->
+<!--		<result column="finished_date" property="finishedDate" />-->
+<!--		<result column="is_deleted" property="isDeleted" />-->
+<!--		<association property="user" resultMap="user" />-->
+<!--	 </resultMap>-->
+
+	 
+ 	 <!-- マッピング定義（ユーザー） -->
+
+<!--	 <resultMap type="com.portfolio.domain.todoItem.model.User" id="user">-->
+<!--		<id column="id" property="id" /> -->
+<!--		<result column="user" property="user" />-->
+<!--		<result column="pass" property="pass" />-->
+<!--		<result column="family_name" property="familyName" />-->
+<!--		<result column="first_name" property="firstName" />-->
+<!--		<result column="is_deleted" property="isDeleted" /> -->
+<!--	 </resultMap>-->
+
+
+	<!--期間データ取得-->
+
+	 <select id="generateForecastCalendar" resultMap="forecastCalendarMap">
+		SELECT calender.calender_date
+		      ,results.higest_temperature
+		      ,results.students_enrolled
+		      ,results.attendance_rate
+		      ,results.issued_quantities
+		      ,results.stock_quantities
+		      ,orders.ordered_quantity
+		 FROM (SELECT
+		           @date := CURRENT_DATE() AS calender_date
+		       UNION ALL
+		           SELECT @date := DATE_ADD(@date, INTERVAL 1 DAY)
+		       FROM
+		           information_schema.COLUMNS
+		       WHERE
+		           @date < DATE_ADD(CURRENT_DATE(), INTERVAL 17 DAY)
+		      )calender
+		LEFT JOIN results
+		       ON results.target_date = calender.calender_date
+		LEFT JOIN orders
+		       ON orders.deliveried_on = calender.calender_date
+		WHERE NOT EXISTS (SELECT *
+		                    FROM holiday_calendar
+		                   WHERE holiday = calender.calender_date
+		                 )
+	 </select>
+
+
+
+	 <!-- 作業項目1件登録 -->
+
+<!--	 <insert id="insertOne">-->
+<!--	    insert into todo_items(-->
+<!--	    	 user_id-->
+<!--			,item_name-->
+<!--			,registration_date-->
+<!--			,expire_date-->
+<!--			,finished_date-->
+<!--	    )-->
+<!--	    values (-->
+<!--	         #{userId}-->
+<!--			,#{itemName}-->
+<!--			,#{registrationDate}-->
+<!--			,#{expireDate}-->
+<!--			,#{finishedDate}-->
+<!--	    )-->
+<!--	</insert>-->
+
+
+<!--	  作業項目検索（未削除分） -->
+
+<!--	 <select id="findManyNotDeleted" resultMap="todoItem">-->
+<!--		 select todo_items.id-->
+<!--		 	   ,todo_items.user_id-->
+<!--		 	   ,todo_items.item_name-->
+<!--		 	   ,todo_items.registration_date-->
+<!--		 	   ,todo_items.expire_date-->
+<!--		 	   ,todo_items.finished_date-->
+<!--		 	   ,todo_items.is_deleted-->
+<!--		 	   ,users.family_name-->
+<!--		 	   ,users.first_name-->
+<!--		   from todo_items-->
+<!--		   left join users-->
+<!--		     on users.id = todo_items.user_id-->
+<!--     	  where todo_items.is_deleted = 0-->
+<!-- 	  <if test="searchWord != null and searchWord != ''">-->
+<!-- 	        and (   todo_items.item_name like CONCAT('%', #{searchWord}, '%')-->
+<!-- 	             or CONCAT(users.family_name , users.first_name) like CONCAT('%', #{searchWord}, '%')-->
+<!-- 	            )-->
+<!--      </if>-->
+<!--     	  order by expire_date is null-->
+<!--     	          ,expire_date-->
+<!--	 </select>-->
+	 
+	 
+<!-- 	  作業項目取得（１件） -->
+
+<!--	 <select id="findOne" resultMap="todoItem">-->
+<!--		 select todo_items.id-->
+<!--		 	   ,todo_items.user_id-->
+<!--		 	   ,todo_items.item_name-->
+<!--		 	   ,todo_items.registration_date-->
+<!--		 	   ,todo_items.expire_date-->
+<!--		 	   ,todo_items.finished_date-->
+<!--		 	   ,todo_items.is_deleted-->
+<!--		 	   ,users.family_name-->
+<!--		 	   ,users.first_name-->
+<!--		   from todo_items-->
+<!--		   left join users-->
+<!--		     on users.id = todo_items.user_id-->
+<!--	      where todo_items.id = #{id}-->
+<!--	 </select>-->
+
+
+<!-- 	  作業項目１件更新 -->
+
+<!--	<update id="updateOne">-->
+<!--		 update todo_items-->
+<!--		<set>-->
+<!--			<if test="itemName != null">						  item_name = #{itemName},</if>-->
+<!--			<if test="userId != null"> 								user_id = #{userId},</if>-->
+<!--			<if test="expireDate != null"> 						expire_date = #{expireDate},</if>-->
+<!--			<if test="finishedDate != null"> 				  finished_date = #{finishedDate},</if>-->
+<!--			<if test="finishedDate == null"> 				  finished_date = null,</if>-->
+<!--			<if test="isDeleted != null and isDeleted != ''"> is_deleted    = #{isDeleted}</if>-->
+<!-- 		</set>-->
+<!--		 where id = #{id}-->
+<!--	</update>-->
+
+
+<!-- 	  作業項目１件更新（完了日） -->
+
+<!--	<update id="updateOneFinishedDate">-->
+<!--		 update todo_items-->
+<!--		<set>-->
+<!--			finished_date = #{finishedDate}-->
+<!-- 		</set>-->
+<!--		 where id = #{id}-->
+<!--	</update>-->
+	
+	
+<!-- 	  作業項目１件更新（削除フラグ） -->
+
+<!--	<update id="updateOneIsDeleted">-->
+<!--		 update todo_items-->
+<!--		<set>-->
+<!--			is_deleted    = #{isDeleted}-->
+<!-- 		</set>-->
+<!--		 where id = #{id}-->
+<!--	</update>-->
+	
+ </mapper>
+ 
+ 

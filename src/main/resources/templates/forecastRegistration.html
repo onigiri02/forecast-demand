@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Javascript読込 -->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<!-- CSS読込 -->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>予測情報登録</title>
+
+</head>
+
+	<body>
+    <!-- ナビゲーション -->
+    <nav layout:replace="~{layout/navbar::navbar}"></nav>
+    <!-- ナビゲーション ここまで -->
+
+    <!-- コンテナ -->
+    <div class="container">
+        <div class="container">
+            <div class="row my-2">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6 alert alert-info">
+                    予測情報を登録してください
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+
+
+<h1>折れ線グラフ</h1>
+  <canvas id="myLineChart"></canvas>
+  
+  <script>
+  var ctx = document.getElementById("myLineChart");
+  var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['8月1日', '8月2日', '8月3日', '8月4日', '8月5日', '8月6日', '8月7日', '8月1日', '8月2日', '8月3日', '8月4日', '8月5日', '8月6日', '8月7日', '8月1日', '8月2日', '8月3日', '8月4日', '8月5日', '8月6日', '8月7日'],
+      datasets: [
+        {
+          label: '最高気温(度）',
+          data: [35, 34, 37, 35, 34, 35, 34, 25],
+          tension: 0,
+          borderColor: "rgba(255,0,0,1)",
+          backgroundColor: "rgba(0,0,0,0)"
+        },
+        {
+          label: '最低気温(度）',
+          data: [25, 27, 27, 25, 26, 27, 25, 21],
+          tension: 0,
+          borderColor: "rgba(0,0,255,1)",
+          backgroundColor: "rgba(0,0,0,0)"
+        }
+      ],
+    },
+    options: {
+      title: {
+        display: true,
+        text: '気温（8月1日~8月7日）'
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            suggestedMax: 40,
+            suggestedMin: 0,
+            stepSize: 10,
+            callback: function(value, index, values){
+              return  value +  '度'
+            }
+          }
+        }]
+      },
+    }
+  });
+  </script>
+
+            <!-- 入力フォーム -->
+            <div class="row my-2">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    
+                    <form th:action="@{/Forecast/forecast}" method="post" th:object="${forecastPeriodForm}">
+
+
+<!--                        <div class="text-danger" th:each="error : ${#fields.globalErrors()}"  th:text="${error}"></div>-->
+    
+                        <div class="form-group">
+                            <label for="forecastPeriodStart" th:text="#{forecastPeriodStart}"></label>
+                            <input type="date" class="form-control" th:field="*{forecastPeriodStart}" th:errorclass="is-invalid">
+<!--                            <div class="invalid-feedback" th:errors="*{forecastPeriodStart}"></div>-->
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="forecastPeriodEnd" th:text="#{forecastPeriodEnd}"></label>
+<!--                            <input type="date" class="form-control" th:field="*{forecastPeriodEnd}" th:errorclass="is-invalid">-->
+<!--                            <div class="invalid-feedback" th:errors="*{forecastPeriodEnd}"></div>-->
+                        </div>
+
+<!--
+                        <div class="form-group">
+                            <label for="user_id" th:text="#{userName}"></label>
+                            <select class="form-control" th:field="*{userId}" th:errorclass="is-invalid">
+	                                <option value="">--選択してください--</option>
+								<div th:each="user_item : ${userList}">
+	                                <option th:value="${user_item.id}" th:text="|${user_item.familyName}${user_item.firstName}|"></option>
+                            </select>
+                            <div class="invalid-feedback" th:errors="*{userId}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="expireDate" th:text="#{expireDate}"></label>
+                            <input type="date" class="form-control" th:field="*{expireDate}" th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:errors="*{expireDate}"></div>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" th:field="*{isFinished}">
+                            <label for="isFinished" th:text="#{isFinished}"></label>
+                        </div>
+              	              
+-->
+                        <input type="submit" value="決定" class="btn btn-primary">
+                        <input type="button" value="キャンセル" class="btn btn-outline-primary"
+                            onclick="location.href='/Home';">
+                            
+
+                    </form>
+
+
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+            <!-- 入力フォーム ここまで -->
+
+        </div>
+        <!-- コンテナ ここまで -->
+
+
+</body>
+
+</html>

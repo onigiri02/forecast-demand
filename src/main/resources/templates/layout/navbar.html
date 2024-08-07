@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Javascript読込 -->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+<!-- CSS読込 -->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+
+    <title></title>
+    <style>
+        /* ボタンを横並びにする */
+        form {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ナビゲーション -->
+    <nav layout:fragment="navbar" class="navbar navbar-expand-md navbar-dark bg-primary">
+        <span class="navbar-brand">需要予測</span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+	            <ul class="navbar-nav mr-auto">
+<!--		
+	                <li class="nav-item" th:classappend="${commonDisplayForm.displayName=='index'} ? 'active'">
+	                    <a class="nav-link" th:href="@{/index}">作業一覧 <span class="sr-only">(current)</span></a>
+	                </li>
+	                <li class="nav-item" th:classappend="${commonDisplayForm.displayName=='entry'} ? 'active'">
+	                    <a class="nav-link" th:href="@{/entry}">作業登録</a>
+	                </li>
+
+	                <li class="nav-item active">
+	                    <div class="nav-link" th:if="${commonDisplayForm.displayName=='search'}">検索結果</div>
+	                    <div class="nav-link" th:if="${commonDisplayForm.displayName=='edit'}">作業更新</div>
+	                    <div class="nav-link" th:if="${commonDisplayForm.displayName=='delete'}">削除確認</div>
+	                </li>
+	                
+	                
+	                <li class="nav-item dropdown">
+						<form method="post" th:action="@{/logout}">	
+		                    <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+		                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${session.sessionForm.userName} + さん">
+		                    </a>
+		
+		                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		                        <div class="dropdown-divider"></div>
+								<button class="dropdown-item" type="submit">
+									ログアウト
+								</button>
+		                    </div>
+						</form>
+	                </li>
+	            </ul>
+
+            <form th:if="${commonDisplayForm.displayName=='index' || commonDisplayForm.displayName=='search'}" class="form-inline my-2 my-lg-0" th:action="@{./index}" method="get">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchWord" th:value="${commonDisplayForm.searchForm.searchWord}">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">検索</button>
+
+            </form>
+-->
+
+        </div>
+    </nav>
+    <!-- ナビゲーション ここまで -->
+
+</body>
+
+</html>

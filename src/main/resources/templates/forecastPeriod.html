@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Javascript読込 -->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+<!-- CSS読込 -->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>登録期間指定</title>
+
+</head>
+
+	<body>
+    <!-- ナビゲーション -->
+    <nav layout:replace="~{layout/navbar::navbar}"></nav>
+    <!-- ナビゲーション ここまで -->
+
+    <!-- コンテナ -->
+    <div class="container">
+        <div class="container">
+            <div class="row my-2">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6 alert alert-info">
+                    予測情報を登録する期間（予測期間）を、3週間以内で指定してください
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+
+            <!-- 入力フォーム -->
+            <div class="row my-2">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+
+
+                    
+                    <form th:action="@{/ForecastPeriod}" method="post" th:object="${forecastPeriodForm}">
+
+
+                        <div class="text-danger" th:each="error : ${#fields.globalErrors()}"  th:text="${error}"></div>
+    
+                        <div class="form-group">
+                            <label for="forecastPeriodStart" th:text="#{forecastPeriodStart}"></label>
+                            <input type="date" class="form-control" th:field="*{forecastPeriodStart}" th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:errors="*{forecastPeriodStart}"></div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="forecastPeriodEnd" th:text="#{forecastPeriodEnd}"></label>
+                            <input type="date" class="form-control" th:field="*{forecastPeriodEnd}" th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:errors="*{forecastPeriodEnd}"></div>
+                        </div>
+
+<!--
+                        <div class="form-group">
+                            <label for="user_id" th:text="#{userName}"></label>
+                            <select class="form-control" th:field="*{userId}" th:errorclass="is-invalid">
+	                                <option value="">--選択してください--</option>
+								<div th:each="user_item : ${userList}">
+	                                <option th:value="${user_item.id}" th:text="|${user_item.familyName}${user_item.firstName}|"></option>
+                            </select>
+                            <div class="invalid-feedback" th:errors="*{userId}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="expireDate" th:text="#{expireDate}"></label>
+                            <input type="date" class="form-control" th:field="*{expireDate}" th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:errors="*{expireDate}"></div>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" th:field="*{isFinished}">
+                            <label for="isFinished" th:text="#{isFinished}"></label>
+                        </div>
+              	              
+-->
+                        <input type="submit" value="決定" class="btn btn-primary">
+                        <input type="button" value="キャンセル" class="btn btn-outline-primary"
+                            onclick="location.href='/Home';">
+                            
+
+                    </form>
+
+
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+            <!-- 入力フォーム ここまで -->
+
+        </div>
+        <!-- コンテナ ここまで -->
+
+
+</body>
+
+</html>
