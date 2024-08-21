@@ -9,5 +9,5 @@ public class Orders {
     private Integer id;
     private Date orderedOn;
     private Date deliveriedOn;
-    private Short orderedQuantity;
+    private Integer orderedQuantity;
 }

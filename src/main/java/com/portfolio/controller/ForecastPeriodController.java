@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.portfolio.beans.ForecastPeriodInfo;
 import com.portfolio.form.ForecastPeriodForm;
 import com.portfolio.form.GroupOrder;
 
@@ -37,7 +38,11 @@ public class ForecastPeriodController {
 		}
 				
 		// リダイレクト先に渡すオブジェクトをセットする
-		redirectAttributes.addFlashAttribute("forecastPeriodForm", form);
+		ForecastPeriodInfo forecastPeriodInfo = new ForecastPeriodInfo();
+		forecastPeriodInfo.setForecastPeriodStart(form.getForecastPeriodStart());
+		forecastPeriodInfo.setForecastPeriodEnd(form.getForecastPeriodEnd());
+		
+		redirectAttributes.addFlashAttribute("forecastPeriodInfo", forecastPeriodInfo);
 
 		// 一覧画面を再表示
 		return "redirect:/Forecast";

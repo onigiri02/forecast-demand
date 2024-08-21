@@ -1,5 +1,6 @@
 package com.portfolio.domain.forecast.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,11 @@ public class ForecastServiceImpl implements ForecastService {
 	private ForecastMapper forecastMapper;
 
 	/** 需要予測用のカレンダーを作成する */
+//TODO	予想出庫数は、予想明細の日付ごとに最後の値を取得する（今は明細ごとでないため精度が低い）
 	@Override
-	public List<ForecastCalendar> generateForecastCalendar() {
+	public List<ForecastCalendar> generateForecastCalendar(Date forecastPeriodStart, Date forecastPeriodEnd) {
 		
-		return forecastMapper.generateForecastCalendar();
+		return forecastMapper.generateForecastCalendar(forecastPeriodStart, forecastPeriodEnd);
 	}
 	
 //TODO 不要分は削除	

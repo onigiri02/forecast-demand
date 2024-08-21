@@ -11,10 +11,10 @@ public class Results {
     private Date targetDate;
     private String weather;
     private Double highestTemperature;
-    private Short studentsEnrolled;
+    private Integer studentsEnrolled;
     private Double attendanceRate;
-    private Short issuedQuantities;
-    private Short stockQuantities;
+    private Integer issuedQuantities;
+    private Integer stockQuantities;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

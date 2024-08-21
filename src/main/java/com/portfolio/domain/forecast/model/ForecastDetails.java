@@ -11,7 +11,7 @@ public class ForecastDetails {
     private Date forecastTargetDate;
     private String weather;
     private Double highestTemperature;
-    private Short studentsEnrolled;
+    private Integer studentsEnrolled;
     private Double attendanceRate;
-    private Short issueQuantities;
+    private Integer issueQuantities;
 }

@@ -1,5 +1,6 @@
 package com.portfolio.domain.forecast.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.portfolio.domain.forecast.model.ForecastCalendar;
@@ -7,7 +8,7 @@ import com.portfolio.domain.forecast.model.ForecastCalendar;
 public interface ForecastService {
 	
 	/** 期間データ取得 */
-	public List<ForecastCalendar> generateForecastCalendar();
+	public List<ForecastCalendar> generateForecastCalendar(Date forecastPeriodStart, Date forecastPeriodEnd);
 	
 //TODO 不要分は削除	
 //

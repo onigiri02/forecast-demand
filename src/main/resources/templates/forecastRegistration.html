@@ -11,6 +11,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 <!-- CSS読込 -->
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/forecastRegistration.css}">
     <title>予測情報登録</title>
 
 </head>
@@ -31,29 +32,30 @@
                 <div class="col-sm-3"></div>
             </div>
 
+<!--      labels: [[ ${calendarDateArray} ]], -->
 
 <h1>折れ線グラフ</h1>
-  <canvas id="myLineChart"></canvas>
-  
-  <script>
+
+
+<div class="row">
+    <div class="col-sm-1" ></div>
+					
+    <div class="graph-area">
+  		<canvas id="myLineChart"></canvas>
+	</div>
+</div>
+  <script type="text/javascript" th:inline="javascript">
   var ctx = document.getElementById("myLineChart");
   var myLineChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: ['8月1日', '8月2日', '8月3日', '8月4日', '8月5日', '8月6日', '8月7日', '8月1日', '8月2日', '8月3日', '8月4日', '8月5日', '8月6日', '8月7日', '8月1日', '8月2日', '8月3日', '8月4日', '8月5日', '8月6日', '8月7日'],
+      labels: [[ ${calendarDateArray} ]], 
       datasets: [
         {
           label: '最高気温(度）',
-          data: [35, 34, 37, 35, 34, 35, 34, 25],
+          data: [[ ${temporaryStockQuantitiesArray} ]],
           tension: 0,
           borderColor: "rgba(255,0,0,1)",
-          backgroundColor: "rgba(0,0,0,0)"
-        },
-        {
-          label: '最低気温(度）',
-          data: [25, 27, 27, 25, 26, 27, 25, 21],
-          tension: 0,
-          borderColor: "rgba(0,0,255,1)",
           backgroundColor: "rgba(0,0,0,0)"
         }
       ],
@@ -70,7 +72,7 @@
             suggestedMin: 0,
             stepSize: 10,
             callback: function(value, index, values){
-              return  value +  '度'
+              return  value +  '個'
             }
           }
         }]
@@ -80,24 +82,71 @@
   </script>
 
             <!-- 入力フォーム -->
-            <div class="row my-2">
-                <div class="col-sm-3"></div>
-                <div class="col-sm-6">
+            <div class="row">
+    			<div class="col-sm-1 p-0" >
+    				<p>予想出庫数</p>
+				</div>
+                <div class="col ml-2 p-0">
                     
-                    <form th:action="@{/Forecast/forecast}" method="post" th:object="${forecastPeriodForm}">
+                    <form th:action="@{/Forecast/forecast}" method="post" th:object="${forecastForm}">
 
 
 <!--                        <div class="text-danger" th:each="error : ${#fields.globalErrors()}"  th:text="${error}"></div>-->
+
+							<div class="inputtext-div" th:each="item: *{forecastCalendar}">
+								<input type="text" class="inputtext" th:value="${item.issuedQuantities}">
+							</div>
+							
+<!--							削除 start-->
+							<div class="inputtext-div" th:each="item: *{forecastCalendar}">
+								<input type="text" class="inputtext" th:value="${item.temporaryStockQuantities}">
+							</div>
+<!--							削除　end-->
+							
+							
+<!--    					<tr th:each="item: ${userList}">-->
+<!--						<td th:text="${item.userId}"></td>-->
+<!--						<td th:text="${item.userName}"></td>-->
+<!--						<td th:text="${#dates.format(item.birthday, 'YYYY/MM/dd')}"></td>-->
+<!--						<td th:text="${item.age}"></td>-->
+<!--						<td th:text="${item.gender == 1} ? '男性': '女性'"></td>-->
+<!--						<td>-->
+<!--							<a class="btn btn-primary" th:href="@{'/user/detail/' + ${item.userId}}">-->
+<!--								詳細-->
+<!--							</a>-->
+<!--						</td>-->
+<!--						</tr>-->
+						
+    
+
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
+<!--    <input type="text" class="inputtext">-->
     
                         <div class="form-group">
-                            <label for="forecastPeriodStart" th:text="#{forecastPeriodStart}"></label>
-                            <input type="date" class="form-control" th:field="*{forecastPeriodStart}" th:errorclass="is-invalid">
+<!--                            <label for="forecastPeriodStart" th:text="#{forecastPeriodStart}"></label>-->
+<!--                            <input type="date" class="form-control" th:field="*{forecastPeriodStart}" th:errorclass="is-invalid">-->
 <!--                            <div class="invalid-feedback" th:errors="*{forecastPeriodStart}"></div>-->
                         </div>
 
 
                         <div class="form-group">
-                            <label for="forecastPeriodEnd" th:text="#{forecastPeriodEnd}"></label>
+<!--                            <label for="forecastPeriodEnd" th:text="#{forecastPeriodEnd}"></label>-->
 <!--                            <input type="date" class="form-control" th:field="*{forecastPeriodEnd}" th:errorclass="is-invalid">-->
 <!--                            <div class="invalid-feedback" th:errors="*{forecastPeriodEnd}"></div>-->
                         </div>
@@ -132,7 +181,6 @@
 
 
                 </div>
-                <div class="col-sm-3"></div>
             </div>
             <!-- 入力フォーム ここまで -->
 
