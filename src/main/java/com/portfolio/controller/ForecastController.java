@@ -75,6 +75,8 @@ public class ForecastController {
 	        	}
             	if (Objects.nonNull(calendar.getIssuedQuantities())) {
             		stock -= calendar.getIssuedQuantities();
+            	} else if (Objects.nonNull(calendar.getForecastIssueQuantities())) {
+            		stock -= calendar.getForecastIssueQuantities();
             	}
         	}
         	

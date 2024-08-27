@@ -34,7 +34,7 @@
 
 <!--      labels: [[ ${calendarDateArray} ]], -->
 
-<h1>折れ線グラフ</h1>
+<h1>在庫推移予想</h1>
 
 
 <div class="row">
@@ -52,7 +52,7 @@
       labels: [[ ${calendarDateArray} ]], 
       datasets: [
         {
-          label: '最高気温(度）',
+          label: '予想在庫数',
           data: [[ ${temporaryStockQuantitiesArray} ]],
           tension: 0,
           borderColor: "rgba(255,0,0,1)",
@@ -63,7 +63,7 @@
     options: {
       title: {
         display: true,
-        text: '気温（8月1日~8月7日）'
+        text: '在庫推移'
       },
       scales: {
         yAxes: [{
@@ -81,26 +81,34 @@
   });
   </script>
 
-            <!-- 入力フォーム -->
+        <!-- 入力フォーム -->
+		<form th:action="@{/Forecast/forecast}" method="post" th:object="${forecastForm}">
+            <div class="row">
+    			<div class="col-sm-1 p-0" >
+    				<p>予想天気</p>
+				</div>
+                <div class="col ml-1 p-0">
+<!--                        <div class="text-danger" th:each="error : ${#fields.globalErrors()}"  th:text="${error}"></div>-->
+
+							<div class="inputtext-div" th:each="item: *{forecastCalendar}">
+								<input type="text" class="input-weather" th:value="${item.forecastIssueQuantities}">
+							</div>
+                </div>
+            </div>
             <div class="row">
     			<div class="col-sm-1 p-0" >
     				<p>予想出庫数</p>
 				</div>
                 <div class="col ml-2 p-0">
-                    
-                    <form th:action="@{/Forecast/forecast}" method="post" th:object="${forecastForm}">
-
-
-<!--                        <div class="text-danger" th:each="error : ${#fields.globalErrors()}"  th:text="${error}"></div>-->
-
 							<div class="inputtext-div" th:each="item: *{forecastCalendar}">
-								<input type="text" class="inputtext" th:value="${item.issuedQuantities}">
+								<input type="text" class="inputtext" th:value="${item.forecastIssueQuantities}">
 							</div>
-							
+                </div>
+            </div>				
 <!--							削除 start-->
-							<div class="inputtext-div" th:each="item: *{forecastCalendar}">
-								<input type="text" class="inputtext" th:value="${item.temporaryStockQuantities}">
-							</div>
+<!--							<div class="inputtext-div" th:each="item: *{forecastCalendar}">-->
+<!--								<input type="text" class="inputtext" th:value="${item.temporaryStockQuantities}">-->
+<!--							</div>-->
 <!--							削除　end-->
 							
 							
@@ -117,26 +125,6 @@
 <!--						</td>-->
 <!--						</tr>-->
 						
-    
-
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
-<!--    <input type="text" class="inputtext">-->
     
                         <div class="form-group">
 <!--                            <label for="forecastPeriodStart" th:text="#{forecastPeriodStart}"></label>-->
@@ -177,11 +165,10 @@
                             onclick="location.href='/Home';">
                             
 
-                    </form>
 
 
-                </div>
-            </div>
+
+        </form>
             <!-- 入力フォーム ここまで -->
 
         </div>

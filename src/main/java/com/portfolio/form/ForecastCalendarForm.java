@@ -14,6 +14,7 @@ public class ForecastCalendarForm {
     private Integer stockQuantities;
    //TODO Quantities（複数形）に直す（テーブル定義も）
     private Integer orderedQuantity;
+	private Integer forecastIssueQuantities;
     private Integer temporaryStockQuantities;
 }
 

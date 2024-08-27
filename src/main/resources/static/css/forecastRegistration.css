@@ -8,11 +8,17 @@
 	text-align: center;
 }
 
-.inputtext-end {
-	width: 29px;
-	margin-left: 0px;
+.input-weather {
+	width: 50px;
+	margin-left: 2px;
+	margin-right:0px;
 	text-align: center;
 }
+.input-weather-div {
+	display:inline;
+	padding: 0;
+}
+
 .graph-area {
 	width: 1000px;
 	height: 500px;	

@@ -25,5 +25,7 @@ public class ForecastForm {
 	private Date deliveriedOn;
 	
 	private Integer orderedQuantity;
+	
+	private Integer forecastIssueQuantities;
 }
 	

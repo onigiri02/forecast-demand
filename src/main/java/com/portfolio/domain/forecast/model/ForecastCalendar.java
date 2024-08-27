@@ -12,5 +12,7 @@ public class ForecastCalendar {
     private Double attendanceRate;
     private Integer issuedQuantities;
     private Integer stockQuantities;
+    //TODO Quantities（複数形）に直す（テーブル定義も）
     private Integer orderedQuantity;
+	private Integer forecastIssueQuantities;
 }

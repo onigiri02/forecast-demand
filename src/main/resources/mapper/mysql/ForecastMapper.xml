@@ -16,6 +16,7 @@
 	    <result property="issuedQuantities" column="issued_quantities"/>
 	    <result property="stockQuantities" column="stock_quantities"/>
 	    <result property="orderedQuantity" column="ordered_quantity"/>
+	    <result property="forecastIssueQuantities" column="forecast_issue_quantities"/>
 	  </resultMap>
 
 
@@ -31,6 +32,7 @@
 		      ,results.issued_quantities
 		      ,results.stock_quantities
 		      ,orders.ordered_quantity
+              ,forecast_quantities.issue_quantities AS forecast_issue_quantities
 		 FROM (SELECT
 		           @date := CURRENT_DATE() AS calendar_date
 		       UNION ALL
@@ -44,6 +46,21 @@
 		       ON results.target_date = calendar.calendar_date
 		LEFT JOIN orders
 		       ON orders.deliveried_on = calendar.calendar_date
+		LEFT JOIN (SELECT forecast_details.forecast_target_date
+						 ,forecast_details.issue_quantities
+					 FROM forecast_details
+					INNER JOIN (SELECT forecast.id
+		  						  FROM forecast
+								 INNER JOIN (SELECT MAX(forecast.forecast_date) max_date
+	      									   FROM forecast
+      									    ) last_forecast_date
+										 ON last_forecast_date.max_date = forecast.forecast_date
+							   ) last_forecast_id
+					        ON forecast_details.forecast_id = last_forecast_id.id
+				  ) forecast_quantities
+			   ON forecast_quantities.forecast_target_date = calendar.calendar_date
+
+
 		WHERE NOT EXISTS (SELECT *
 		                    FROM holiday_calendar
 		                   WHERE holiday = calendar.calendar_date
