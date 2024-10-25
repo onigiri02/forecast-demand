@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.portfolio.beans.ForecastPeriodInfo;
+import com.portfolio.domain.forecast.model.CodeMaster;
 import com.portfolio.domain.forecast.model.ForecastCalendar;
+import com.portfolio.domain.forecast.service.CodeMasterService;
 import com.portfolio.domain.forecast.service.ForecastService;
 import com.portfolio.form.ForecastCalendarForm;
 import com.portfolio.form.ForecastForm;
@@ -27,6 +29,9 @@ public class ForecastController {
 	
 	@Autowired
 	private ForecastService forecastService;
+
+	@Autowired
+	private CodeMasterService codeMasterService;
 	
 	/** 出庫予測数・発注数登録画面を表示 */
 	@GetMapping
@@ -109,12 +114,21 @@ public class ForecastController {
 		form.setForecastCalendar(forecastCalendarForm);
 		
 
-		
+		// 天気のプルダウン用データを取得する
+		//TODO コンスト化
+		List<CodeMaster> weatherCode= codeMasterService.getCodeMasterByGroupCode("010");
+
 		
 		model.addAttribute("forecastForm", form);
 	    model.addAttribute("calendarDateArray", calendarDateArray);
 	    model.addAttribute("temporaryStockQuantitiesArray", temporaryStockQuantitiesArray);
+	    model.addAttribute("weatherCode", weatherCode);
 		
+
+		//TODO weatherCodeをhtmlのプルダウンに表示させるところから
+
+		
+	    
 		return "/forecastRegistration";
 	}
 

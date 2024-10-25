@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <!-- Mapperとxmlのマッピング -->
+ <mapper namespace="com.portfolio.repository.CodeMasterMapper">
+	 
+
+ 	<!-- マッピング定義（コードマスタ取得） -->
+
+	  <resultMap id="codeMasterMap" type="com.portfolio.domain.forecast.model.CodeMaster">
+	    <result property="id" column="id"/>
+	    <result property="groupCode" column="group_code"/>
+	    <result property="code" column="code"/>
+	    <result property="groupCodeName" column="group_code_name"/>
+	    <result property="codeName" column="code_name"/>
+	    <result property="sortKey" column="sort_key"/>
+	  </resultMap>
+	  
+
+	<!--コードマスタ取得-->
+
+	 <select id="findByGroupCode" resultMap="codeMasterMap">
+	   SELECT *
+		 FROM code_master
+		WHERE group_code = #{groupCode}
+		ORDER BY sort_key
+	 </select>
+
+
+ </mapper>
+
+
+
+
+
+ 
+ 

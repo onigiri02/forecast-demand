@@ -87,11 +87,11 @@
     			<div class="col-sm-1 p-0" >
     				<p>予想天気</p>
 				</div>
-                <div class="col ml-1 p-0">
+                <div class="col ml-3 p-0">
 <!--                        <div class="text-danger" th:each="error : ${#fields.globalErrors()}"  th:text="${error}"></div>-->
 
 							<div class="inputtext-div" th:each="item: *{forecastCalendar}">
-								<input type="text" class="input-weather" th:value="${item.forecastIssueQuantities}">
+								<button type="button" class="btn btn-secondary dropdown-toggle btn-sm input-weather" th:value="${item.forecastIssueQuantities}">
 							</div>
                 </div>
             </div>
